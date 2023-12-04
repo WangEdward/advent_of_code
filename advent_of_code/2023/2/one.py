@@ -49,4 +49,6 @@ with open(Path(__file__).parent / "input.txt") as f:
         game = parse_input(line)
         result += game.order_or_zero()
 
+
+assert result == 2331
 print(result)

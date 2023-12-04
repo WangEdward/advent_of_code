@@ -46,4 +46,5 @@ with open(Path(__file__).parent / "input.txt") as f:
         game = parse_input(line)
         result += game.power()
 
+assert result == 71585
 print(result)

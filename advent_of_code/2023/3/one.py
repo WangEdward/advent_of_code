@@ -35,4 +35,6 @@ with open(Path(__file__).parent / "input.txt") as f:
                     if check_range(start_y=y - len(tmp_num), end_y=y, x=x):
                         result += int(tmp_num)
                     tmp_num = ""
-    print(result)
+
+assert result == 525181
+print(result)

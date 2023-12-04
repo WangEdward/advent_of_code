@@ -9,7 +9,7 @@ d = defaultdict(list)
 def parse_map(lines):
     for x, line in enumerate(lines):
         for y, char in enumerate(line):
-            if char == '*':
+            if char == "*":
                 d[(x, y)] = []
 
 
@@ -35,5 +35,7 @@ with open(Path(__file__).parent / "input.txt") as f:
                     tmp_num = ""
     for _, v in d.items():
         if len(v) == 2:
-            result += v[0]*v[1]
-    print(result)
+            result += v[0] * v[1]
+
+assert result == 84289137
+print(result)
