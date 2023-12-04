@@ -1,3 +1,4 @@
+import itertools
 from pathlib import Path
 from collections import defaultdict
 
@@ -14,11 +15,12 @@ def parse_map(lines):
 
 
 def check_range(start_y, end_y, x):
-    for y in range(start_y - 1, end_y + 1):
-        for _x in range(x - 1, x + 2):
-            if (_x, y) in d:
-                return True
-    return False
+    return any(
+        (_x, y) in d
+        for y, _x in itertools.product(
+            range(start_y - 1, end_y + 1), range(x - 1, x + 2)
+        )
+    )
 
 
 with open(Path(__file__).parent / "input.txt") as f:
@@ -30,11 +32,10 @@ with open(Path(__file__).parent / "input.txt") as f:
         for y, char in enumerate(line):
             if char.isdigit():
                 tmp_num += char
-            else:
-                if tmp_num:
-                    if check_range(start_y=y - len(tmp_num), end_y=y, x=x):
-                        result += int(tmp_num)
-                    tmp_num = ""
+            elif tmp_num:
+                if check_range(start_y=y - len(tmp_num), end_y=y, x=x):
+                    result += int(tmp_num)
+                tmp_num = ""
 
 assert result == 525181
 print(result)

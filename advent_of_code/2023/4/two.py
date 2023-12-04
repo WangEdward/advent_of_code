@@ -12,12 +12,9 @@ d = defaultdict(lambda: 1)
 def parse_input(line):
     order = int(re.findall(ORDER_REGEX, line)[0])
     line = line.split(": ")[1].split(" | ")
-    wining = re.split("\s+", line[0].strip())
-    having = re.split("\s+", line[1].strip())
-    count = 0
-    for i in wining:
-        if i in having:
-            count += 1
+    wining = re.split(r"\s+", line[0].strip())
+    having = re.split(r"\s+", line[1].strip())
+    count = sum(i in having for i in wining)
     current_round = d[order - 1]
     for i in range(order, order + count):
         d[i] += current_round

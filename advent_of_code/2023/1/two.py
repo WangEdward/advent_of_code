@@ -1,6 +1,7 @@
 from pathlib import Path
 
-NUM_MAP = [None, 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', None, '1', '2', '3', '4', '5', '6', '7', '8', '9']
+NUM_MAP = [None, 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', None, '1', '2', '3', '4', '5',
+           '6', '7', '8', '9']
 
 result = 0
 

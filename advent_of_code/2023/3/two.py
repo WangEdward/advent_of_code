@@ -29,10 +29,9 @@ with open(Path(__file__).parent / "input.txt") as f:
         for y, char in enumerate(line):
             if char.isdigit():
                 tmp_num += char
-            else:
-                if tmp_num:
-                    check_range(start_y=y - len(tmp_num), end_y=y, x=x, k=tmp_num)
-                    tmp_num = ""
+            elif tmp_num:
+                check_range(start_y=y - len(tmp_num), end_y=y, x=x, k=tmp_num)
+                tmp_num = ""
     for _, v in d.items():
         if len(v) == 2:
             result += v[0] * v[1]
