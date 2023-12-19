@@ -6,12 +6,7 @@ result = 0
 all_rules = {}
 other_rules = {}
 
-queue = [
-    {
-        "id": "in",
-        "data": {"x": (1, 4000), "m": (1, 4000), "a": (1, 4000), "s": (1, 4000)},
-    }
-]
+queue = [("in", {"x": (1, 4000), "m": (1, 4000), "a": (1, 4000), "s": (1, 4000)})]
 
 accepted = []
 rejected = []
@@ -34,8 +29,7 @@ def solve():
 
 
 def solve_single(item):
-    rule_id = item["id"]
-    data = item["data"]
+    rule_id, data = item
     if rule_id == "A":
         accepted.append(data)
         return
@@ -46,41 +40,16 @@ def solve_single(item):
         c = rule[0]
         sign = rule[1]
         val = int(rule[2:])
-        if sign == "<" and data[c][0] < val:
-            tmp = data.copy()
-            tmp[c] = (data[c][0], min(val - 1, data[c][1]))
-            queue.append(
-                {
-                    "id": dst,
-                    "data": tmp,
-                }
-            )
-            if data[c][1] < val:
-                data = None
-                break
-            else:
-                data[c] = (val, data[c][1])
-        if sign == ">" and data[c][1] > val:
-            tmp = data.copy()
-            tmp[c] = (max(val + 1, data[c][0]), data[c][1])
-            queue.append(
-                {
-                    "id": dst,
-                    "data": tmp,
-                }
-            )
-            if data[c][0] > val:
-                data = None
-                break
-            else:
-                data[c] = (data[c][0], val)
-    if data:
-        queue.append(
-            {
-                "id": other_rules[rule_id],
-                "data": data.copy(),
-            }
-        )
+        assert data[c][0] < val < data[c][1]
+        tmp = data.copy()
+        if sign == "<":
+            tmp[c] = (data[c][0], val - 1)
+            data[c] = (val, data[c][1])
+        elif sign == ">":
+            tmp[c] = (val + 1, data[c][1])
+            data[c] = (data[c][0], val)
+        queue.append((dst, tmp))
+    queue.append((other_rules[rule_id], data))
 
 
 with open(Path(__file__).parent / "input.txt") as f:
